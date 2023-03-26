@@ -5,9 +5,10 @@ namespace App\Interfaces;
 use App\DTOs\UserDTO;
 use App\Http\Requests\User\StoreUserRequest;
 use App\Http\Requests\User\UpdateUserRequest;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 interface UserRepositoryInterface {
-    public function getAll(): array;
+    public function getAll(): LengthAwarePaginator;
 
     public function create(StoreUserRequest $userDTO): UserDTO;
 

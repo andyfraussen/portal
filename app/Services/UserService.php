@@ -7,6 +7,7 @@ use App\Http\Requests\User\UpdateUserRequest;
 use App\Interfaces\UserServiceInterface;
 use App\Repositories\UserRepository;
 use App\DTOs\UserDTO;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 class UserService implements UserServiceInterface
 {
@@ -17,7 +18,7 @@ class UserService implements UserServiceInterface
         $this->userRepository = $userRepository;
     }
 
-    public function getUsers(): array
+    public function getUsers(): LengthAwarePaginator
     {
         return $this->userRepository->getAll();
     }

@@ -7,17 +7,16 @@ use App\Http\Requests\User\StoreUserRequest;
 use App\Http\Requests\User\UpdateUserRequest;
 use App\Interfaces\UserRepositoryInterface;
 use App\Models\User;
+use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\Hash;
 
 class UserRepository implements UserRepositoryInterface
 {
-    public function getAll(): array
+    public function getAll(int $perPage = 10): LengthAwarePaginator
     {
-        $users = User::all();
+        $users = User::with('organisations')->paginate($perPage);
 
-        return array_map(function ($user) {
-            return new UserDTO($user);
-        }, $users->toArray());
+        return $users;
     }
 
     public function create(StoreUserRequest $userDTO): UserDTO
@@ -35,7 +34,7 @@ class UserRepository implements UserRepositoryInterface
 
     public function getById(int $id): ?UserDTO
     {
-        $user = User::find($id);
+        $user = User::with('organisations')->find($id);
 
         if ($user === null) {
             return null;
@@ -46,7 +45,7 @@ class UserRepository implements UserRepositoryInterface
 
     public function update(int $id, UpdateUserRequest $userDTO): ?UserDTO
     {
-        $user = User::find($id);
+        $user = User::with('organisations')->find($id);
 
         if ($user === null) {
             return null;

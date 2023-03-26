@@ -5,10 +5,11 @@ namespace App\Interfaces;
 use App\DTOs\UserDTO;
 use App\Http\Requests\User\StoreUserRequest;
 use App\Http\Requests\User\UpdateUserRequest;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 interface UserServiceInterface
 {
-    public function getUsers(): array;
+    public function getUsers(): LengthAwarePaginator;
 
     public function getUserById(int $id): ?UserDTO;
 
